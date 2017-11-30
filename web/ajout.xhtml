@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Inscription</title>
+            
+        <h:outputStylesheet library="css" name="table-style.css"  />
+    </h:head>
+    <h:body>
+        <h1>Nouvel utilisateur</h1>
+        <f:view>
+            
+            
+            <h:form>
+                <p:panelGrid columns="3">
+                    <h:outputLabel for="nom" value="Nom" />
+                    <h:inputText id="nom" size="12" value="#{utilisateursBean.nom}"
+                                 required="true" requiredMessage="Veuiller entrer un nom"/>
+                    <h:message for="nom" style="color:red;"/>
+                                    
+                    <h:outputLabel for="mdp" value="Mot de passe" />
+                    <h:inputSecret id="mdp" size="12" value="#{utilisateursBean.motDePasse}"
+                                   required="true" requiredMessage="Veuiller entrer un mot de passe" validatorMessage="8 caracteres min pour le mot de passe">
+                        <f:validateLength minimum="8"></f:validateLength>
+                    </h:inputSecret>
+                    <h:message for="mdp" style="color:red;"/>
+                    
+                    <h:outputLabel for="email" value="Email" />
+                    <h:inputText id="email" size="12" value="#{utilisateursBean.email}"
+                                 required="true" requiredMessage="Veuiller entrer un email" validatorMessage="format email invalide">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    </h:inputText>
+                    <h:message for="email" style="color:red;"/>
+                    
+                    
+                    <h:commandButton id="btnLogIn" value="Valider" action="#{utilisateursBean.checkAddUser()}" />
+                </p:panelGrid>
+            </h:form>
+            
+            <h:messages globalOnly="true" style="color:red;"/>
+                
+                
+        </f:view>
+    </h:body>
+</html>

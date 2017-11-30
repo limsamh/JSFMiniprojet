@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8" />
+        <title>Acceuil</title>
+            
+    </h:head>
+    <h:body>
+        <h1>Liste des utilisateurs</h1>
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+                
+            <p:dataTable  value="#{utilisateursBean.userArrayList}" var="o" editable="true" style="margin-bottom:40px">
+                
+                
+                <p:ajax event="rowEdit" listener="#{utilisateursBean.onRowEdit}" update=":form:msgs" />
+                <p:ajax event="rowEditCancel" listener="#{utilisateursBean.onRowCancel}" update=":form:msgs" />
+                    
+                    
+                <p:column headerText="Id" sortBy="#{o.id}">
+                    <h:outputText value="#{o.id}" />
+                </p:column>
+                    
+                <p:column headerText="Nom" sortBy="#{o.nom}">
+                    <h:outputText value="#{o.nom}" style="#{o.blocage eq true ? 'color:red;background:White;' : 'color:Black;background:White;'}"/>
+                </p:column>
+                    
+                <p:column headerText="Email">
+                    #{o.email}
+                </p:column>
+                    
+                <p:column headerText="Mot de passe">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{o.motDePasse}" /></f:facet>
+                        <f:facet name="input"><p:inputText id="modelInput" value="#{o.motDePasse}" style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                    
+                    
+                <p:column headerText="Inscription">
+                    <h:outputText value="#{o.dateInscription}">
+                        <f:convertDateTime pattern="dd MMM YYYY" locale="fr"/>
+                    </h:outputText>
+                </p:column>
+                    
+                <p:column headerText="Blocage">
+                    #{o.blocage}
+                </p:column>
+                <p:column headerText="Actions">
+                    
+                        <h:commandButton value="#{o.blocage eq true ? 'Debloquer' : 'Bloquer'}" action="${utilisateursBean.bloquer(o.id,o.blocage)}" />
+                            
+                            
+                        <h:commandButton value="Supprimer" action="${utilisateursBean.supprimer(o.id)}" />
+                    
+                </p:column>
+                    
+                    
+               
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form>
+            
+            <h:commandButton value="Nouvel utilisateur" action="ajout" />
+                
+                
+                
+        </h:form>
+    </h:body>
+</html>
